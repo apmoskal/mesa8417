@@ -9,7 +9,7 @@ import numpy as np
 st.set_page_config(page_title="Airbnb Dashboard", page_icon="🏠", layout="wide")
 
 # Load the compressed dataset
-df = pd.read_csv("listings (2).csv.gz", compression="gzip")
+df = pd.read_csv("listings.csv")
 
 # Clean price column
 df["price"] = df["price"].replace({r"[\$,]": ""}, regex=True).astype(float)
