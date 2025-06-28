@@ -5,7 +5,6 @@ import pandas as pd
 import numpy as np
 
 
-
 # read in data
 airbnb = pd.read_csv('listings.csv')
 
