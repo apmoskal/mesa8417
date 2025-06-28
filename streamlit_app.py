@@ -17,6 +17,9 @@ df["price"] = df["price"].replace({r"[\$,]": ""}, regex=True).astype(float)
 # Sidebar Filters
 st.sidebar.header("🔍 Filters")
 
+property_type = ["All"] + sorted(df["property_type"].dropna().unique().tolist())
+selected_property = st.sidebar.selectbox("Property Type", property_type)
+
 room_types = ["All"] + sorted(df["room_type"].dropna().unique().tolist())
 selected_room = st.sidebar.selectbox("Room Type", room_types)
 
