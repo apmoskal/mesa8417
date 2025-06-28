@@ -7,7 +7,7 @@ import numpy as np
 
 
 # read in data
-airbnb = pd.read_csv('listings-2.csv')
+airbnb = pd.read_csv('listings.csv')
 
 # get rid of columns with identifying info
 airbnb.drop(['id', 'host_name', 'listing_url', 'picture_url', 'host_url', 'host_thumbnail_url', 'host_picture_url', 'host_location', 'host_about', 'latitude', 'longitude', 'neighbourhood_group_cleansed'], axis=1, inplace=True)
