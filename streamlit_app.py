@@ -6,7 +6,7 @@ import numpy as np
 
 
 # Set page config
-st.set_page_config(page_title="Airbnb Dashboard", layout="wide")
+st.set_page_config(page_title="Cambridge Airbnb Dashboard", layout="wide")
 
 # Load the compressed dataset
 df = pd.read_csv("listings.csv")
@@ -39,7 +39,7 @@ if selected_neigh != "All":
 filtered = filtered[filtered["price"].between(*selected_price)]
 
 # Dashboard Title
-st.title("🏠 Airbnb Listings Dashboard")
+st.title("Cambridge Airbnb Listings Dashboard")
 
 # Overview Text
 st.markdown(
