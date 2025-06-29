@@ -48,6 +48,8 @@ st.markdown(
     f"priced between **${selected_price[0]}–${selected_price[1]}**."
 )
 
+st.image("Cambridge.jpg", width=400)
+
 # Visualization Tabs
 tab1, tab2, tab3 = st.tabs(["📊 Charts", "🗺️ Map", "📋 Data"])
 
