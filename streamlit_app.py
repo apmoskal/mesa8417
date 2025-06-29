@@ -72,7 +72,7 @@ st.altair_chart(hist_chart, use_container_width=True)
 
 #with tab2:
 st.subheader("Listing Locations")
-st.map(filtered[["latitude", "longitude"]].dropna())
+st.map(filtered[["latitude", "longitude"], color="neighbourhood_group_cleansed"].dropna())
 
 #with tab3:
 st.subheader("Filtered Listings")
