@@ -6,7 +6,7 @@ import numpy as np
 
 
 # Set page config
-st.set_page_config(page_title="Airbnb Dashboard", page_icon="🏠", layout="wide")
+st.set_page_config(page_title="Airbnb Dashboard", layout="wide")
 
 # Load the compressed dataset
 df = pd.read_csv("listings.csv")
@@ -15,7 +15,7 @@ df = pd.read_csv("listings.csv")
 df["price"] = df["price"].replace({r"[\$,]": ""}, regex=True).astype(float)
 
 # Sidebar Filters
-st.sidebar.header("🔍 Filters")
+st.sidebar.header("Filters")
 
 property_type = ["All"] + sorted(df["property_type"].dropna().unique().tolist())
 selected_property = st.sidebar.selectbox("Property Type", property_type)
