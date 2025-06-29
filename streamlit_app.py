@@ -51,9 +51,9 @@ st.markdown(
 st.image("Cambridge.jpg", width=400)
 
 # Visualization Tabs
-tab1, tab2, tab3 = st.tabs(["📊 Charts", "🗺️ Map", "📋 Data"])
+#tab1, tab2, tab3 = st.tabs(["📊 Charts", "🗺️ Map", "📋 Data"])
 
-with tab1:
+#with tab1:
     st.subheader("Average Price by Room Type")
     avg_price = filtered.groupby("room_type")["price"].mean().reset_index()
     bar_chart = alt.Chart(avg_price).mark_bar().encode(
@@ -70,11 +70,11 @@ with tab1:
     ).properties(width=600)
     st.altair_chart(hist_chart, use_container_width=True)
 
-with tab2:
+#with tab2:
     st.subheader("Listing Locations")
     st.map(filtered[["latitude", "longitude"]].dropna())
 
-with tab3:
+#with tab3:
     st.subheader("Filtered Listings")
     st.dataframe(filtered)
 
