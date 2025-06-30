@@ -59,7 +59,9 @@ st.altair_chart(hist_chart, use_container_width=True)
 
 st.subheader("Boxplot of Price by Review Scores Rating")
 
-box_chart = alt.Chart(df.dropna(subset=['rating_bin', 'price'])).mark_boxplot(extent='min-max').encode(
+# Draw boxplot for just the selected neighbourhood
+st.subheader("Boxplot of Price by Review Scores Rating (Selected Neighbourhood)")
+box_chart = alt.Chart(filtered_df.dropna(subset=['rating_bin', 'price'])).mark_boxplot(extent='min-max').encode(
     x=alt.X('rating_bin:N', title='Review Scores Rating Bin'),
     y=alt.Y('price:Q', title='Price ($)'),
     color=alt.Color('rating_bin:N', legend=None)
