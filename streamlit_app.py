@@ -63,5 +63,5 @@ bar_chart = alt.Chart(filtered).mark_bar().encode(
     color=alt.condition('filtered', 'neighbourhood_cleansed', alt.value('lightgray'), legend=None),
     tooltip=['neighbourhood_cleansed', 'count()']
 ).add_params(      
-    select_neighborhood
+    filtered
 )
