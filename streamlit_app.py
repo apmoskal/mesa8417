@@ -6,8 +6,12 @@ import numpy as np
 # Load the compressed dataset
 df = pd.read_csv("listings.csv")
 
-# Clean price column
+# Clean data
 df["price"] = df["price"].replace({r"[\$,]": ""}, regex=True).astype(float)
+
+#Fill NaN with a default value
+df['neighbourhood_group_cleansed'] = df['neighbourhood_group_cleansed'].fillna('Not Listed')
+df['neighbourhood_group_cleansed'] = df['neighbourhood_group_cleansed'].astype(str).str.strip()
 
 # Config Page
 st.set_page_config(page_title="Cambridge Airbnb Dashboard", layout="wide")
@@ -16,10 +20,8 @@ st.set_page_config(page_title="Cambridge Airbnb Dashboard", layout="wide")
 st.sidebar.header("Filters")  # Move filters to the sidebar
 
 # Show dropdown with all unique neighbourhoods
-selected_hood = st.sidebar.selectbox(
-    'Select Neighbourhood',
-    sorted(df['neighbourhood_group_cleansed'].unique())
-)
+unique_hoods = sorted([hood for hood in df['neighbourhood_group_cleansed'].unique() if hood and hood != 'nan'])
+selected_hood = st.sidebar.selectbox('Select Neighbourhood', unique_hoods)
 
 filtered_df = df[df['neighbourhood_group_cleansed'] == selected_hood]
 
