@@ -13,35 +13,8 @@ df["price"] = df["price"].replace({r"[\$,]": ""}, regex=True).astype(float)
 # Config Page
 st.set_page_config(page_title="Cambridge Airbnb Dashboard", layout="wide")
 
-# Selectbox: Filter by Rating
-# rating = st.selectbox("Filter by Property Rating", ["All"] + list(df["review_scores_rating_bin"].unique()))
-
-rating = st.selectbox("Filter by Property Rating", ["All"] + rating_bins)
-
-# Apply filters
-filtered_props = df if rating == "All" else df[(df["review_scores_rating_bin"] == rating)]
-
-# Create a bar chart with single selection
-select_neighborhood = alt.selection_point(fields=['neighbourhood_cleansed'], on='click', empty='all')
-
-# First chart: Bar chart of available properties by neighbourhood
-bar_chart = alt.Chart(filtered_props).mark_bar().encode(
-    x=alt.X('neighbourhood_cleansed').sort('-y'),
-    y=alt.Y('count()', title='Available Property Count'),
-    color=alt.condition(select_neighborhood, 'neighbourhood_cleansed', alt.value('lightgray'), legend=None),
-    tooltip=['neighbourhood_cleansed', 'count()']
-).add_params(      
-    select_neighborhood
-)
-
 # Filters on Sidebar
 st.sidebar.header("Filters")
-
-property_type = ["All"] + sorted(df["property_type"].dropna().unique().tolist())
-selected_property = st.sidebar.selectbox("Property Type", property_type)
-
-room_types = ["All"] + sorted(df["room_type"].dropna().unique().tolist())
-selected_room = st.sidebar.selectbox("Room Type", room_types)
 
 neighborhoods = ["All"] + sorted(df["neighbourhood_group_cleansed"].dropna().unique().tolist())
 selected_neigh = st.sidebar.selectbox("Neighbourhood", neighborhoods)
@@ -92,11 +65,16 @@ hist_chart = alt.Chart(filtered).mark_bar(color='#FF7F0E').encode(
 ).properties(width=600)
 st.altair_chart(hist_chart, use_container_width=True)
 
-#with tab2:
-st.subheader("Listing Locations")
-st.map(filtered[["latitude", "longitude"].dropna()])
-
 #with tab3:
 st.subheader("Filtered Listings")
 st.dataframe(filtered)
 
+# First chart: Bar chart of available properties by neighbourhood
+bar_chart = alt.Chart(filtered_props).mark_bar().encode(
+    x=alt.X('neighbourhood_cleansed').sort('-y'),
+    y=alt.Y('count()', title='Available Property Count'),
+    color=alt.condition(select_neighborhood, 'neighbourhood_cleansed', alt.value('lightgray'), legend=None),
+    tooltip=['neighbourhood_cleansed', 'count()']
+).add_params(      
+    select_neighborhood
+)
