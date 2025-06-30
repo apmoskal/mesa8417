@@ -70,7 +70,7 @@ st.subheader("Filtered Listings")
 st.dataframe(filtered)
 
 # First chart: Bar chart of available properties by neighbourhood
-bar_chart = alt.Chart(filtered_props).mark_bar().encode(
+bar_chart = alt.Chart(filtered).mark_bar().encode(
     x=alt.X('neighbourhood_cleansed').sort('-y'),
     y=alt.Y('count()', title='Available Property Count'),
     color=alt.condition(select_neighborhood, 'neighbourhood_cleansed', alt.value('lightgray'), legend=None),
