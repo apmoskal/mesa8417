@@ -4,17 +4,37 @@ import altair as alt
 import pandas as pd
 import numpy as np
 
-
-# Set page config
-st.set_page_config(page_title="Cambridge Airbnb Dashboard", layout="wide")
-
 # Load the compressed dataset
 df = pd.read_csv("listings.csv")
 
 # Clean price column
 df["price"] = df["price"].replace({r"[\$,]": ""}, regex=True).astype(float)
 
-# Sidebar Filters
+# Config Page
+st.set_page_config(page_title="Cambridge Airbnb Dashboard", layout="wide")
+
+# Selectbox: Filter by Rating
+# rating = st.selectbox("Filter by Property Rating", ["All"] + list(df["review_scores_rating_bin"].unique()))
+
+rating = st.selectbox("Filter by Property Rating", ["All"] + rating_bins)
+
+# Apply filters
+filtered_props = df if rating == "All" else df[(df["review_scores_rating_bin"] == rating)]
+
+# Create a bar chart with single selection
+select_neighborhood = alt.selection_point(fields=['neighbourhood_cleansed'], on='click', empty='all')
+
+# First chart: Bar chart of available properties by neighbourhood
+bar_chart = alt.Chart(filtered_props).mark_bar().encode(
+    x=alt.X('neighbourhood_cleansed').sort('-y'),
+    y=alt.Y('count()', title='Available Property Count'),
+    color=alt.condition(select_neighborhood, 'neighbourhood_cleansed', alt.value('lightgray'), legend=None),
+    tooltip=['neighbourhood_cleansed', 'count()']
+).add_params(      
+    select_neighborhood
+)
+
+# Filters on Sidebar
 st.sidebar.header("Filters")
 
 property_type = ["All"] + sorted(df["property_type"].dropna().unique().tolist())
@@ -34,6 +54,8 @@ selected_price = st.sidebar.slider("Price Range", min_value=price_min, max_value
 filtered = df.copy()
 if selected_room != "All":
     filtered = filtered[filtered["room_type"] == selected_room]
+if selected_neigh != "All":
+    filtered = filtered[filtered["neighbourhood_group_cleansed"] == selected_neigh]
 if selected_neigh != "All":
     filtered = filtered[filtered["neighbourhood_group_cleansed"] == selected_neigh]
 filtered = filtered[filtered["price"].between(*selected_price)]
