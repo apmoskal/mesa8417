@@ -10,6 +10,10 @@ df = pd.read_csv("listings.csv")
 # Clean data
 df["price"] = df["price"].replace({r"[\$,]": ""}, regex=True).astype(float)
 
+bins = [0, 1, 2, 3, 4, 5]
+labels = ['(0-1]', '(1-2]', '(2-3]', '(3-4]', '(4-5]']
+df['rating_bin'] = pd.cut(df['review_scores_rating'], bins=bins, labels=labels, include_lowest=True, right=True)
+
 #Fill NaN with a default value
 df['neighbourhood_cleansed'] = df['neighbourhood_cleansed'].fillna('Not Listed')
 df['neighbourhood_cleansed'] = df['neighbourhood_cleansed'].astype(str).str.strip()
@@ -33,7 +37,7 @@ else:
 # Dashboard Title
 st.title("Cambridge Airbnb Listings Dashboard")
 
-st.image("Cambridge.jpg", width=400)
+st.image("Cambridge.jpg", use_column_width=True)
 
 st.subheader("Map of Listings")
 
@@ -52,3 +56,13 @@ hist_chart = alt.Chart(filtered_df).mark_bar(color='#FF7F0E').encode(
     y=alt.Y("count()", title="Number of Listings")
 ).properties(width=600)
 st.altair_chart(hist_chart, use_container_width=True)
+
+st.subheader("Boxplot of Price by Review Scores Rating")
+
+box_chart = alt.Chart(df.dropna(subset=['rating_bin', 'price'])).mark_boxplot(extent='min-max').encode(
+    x=alt.X('rating_bin:N', title='Review Scores Rating Bin'),
+    y=alt.Y('price:Q', title='Price ($)'),
+    color=alt.Color('rating_bin:N', legend=None)
+).properties(width=600)
+
+st.altair_chart(box_chart, use_container_width=True)
