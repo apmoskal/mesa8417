@@ -31,31 +31,13 @@ st.title("Cambridge Airbnb Listings Dashboard")
 
 st.image("Cambridge.jpg", width=400)
 
-st.subheader("Map of Listings (Boston Area)")
+st.subheader("Map of Listings")
 
+# Prepare data for map (remove rows with missing coordinates)
 map_df = filtered_df.dropna(subset=['latitude', 'longitude'])
 
 if not map_df.empty:
-    st.pydeck_chart(pdk.Deck(
-        map_style='mapbox://styles/mapbox/streets-v12',  # Boston area basemap
-        initial_view_state=pdk.ViewState(
-            latitude=42.37,
-            longitude=-71.11,
-            zoom=12,
-            pitch=0,
-        ),
-        layers=[
-            pdk.Layer(
-                'ScatterplotLayer',
-                data=map_df,
-                get_position='[longitude, latitude]',
-                get_color='[255,140,0,160]',
-                get_radius=40,
-                pickable=True,
-            ),
-        ],
-        tooltip={"text": "Price: ${price}\nName: {name}"}
-    ))
+    st.map(map_df[['latitude', 'longitude']])
 else:
     st.info("No listings available for this neighbourhood.")
 
