@@ -53,7 +53,7 @@ else:
 
 # Graph Two
 st.subheader(f"Price Distribution in {selected_hood}")
-hist_chart = alt.Chart(filtered_df).mark_bar(color='#FF7F0E').encode(
+hist_chart = alt.Chart(filtered_df).mark_bar(color='steelblue').encode(
     x=alt.X("price:Q", bin=alt.Bin(maxbins=40), title="Price ($)"),
     y=alt.Y("count()", title="Number of Listings")
 ).properties(width=600)
@@ -61,7 +61,7 @@ st.altair_chart(hist_chart, use_container_width=True)
 
 
 # Graph Three
-st.subheader(f"Boxplot of Price by Review Scores Rating ({selected_hood})")
+st.subheader(f"Boxplot of Price by Review Scores Rating {selected_hood}")
 box_chart = alt.Chart(filtered_df.dropna(subset=['rating_bin', 'price'])).mark_boxplot(extent='min-max').encode(
     x=alt.X('rating_bin:N', title='Review Scores Rating Bin'),
     y=alt.Y('price:Q', title='Price ($)'),
