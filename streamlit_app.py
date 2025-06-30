@@ -1,4 +1,4 @@
-import streamlit as st
+ghbourhoodsimport streamlit as st
 import altair as alt
 import pandas as pd
 import numpy as np
@@ -26,10 +26,10 @@ st.sidebar.header("Filters")  # Move filters to the sidebar
 
 # Show dropdown with all unique neighbourhoods
 unique_hoods = sorted([hood for hood in df['neighbourhood_cleansed'].unique() if hood and hood != 'nan'])
-unique_hoods.insert(0, "All")  # Add "All" at the top
+unique_hoods.insert(0, "All Neighbourhoods")  # Add "All" at the top
 selected_hood = st.sidebar.selectbox('Select Neighbourhood', unique_hoods)
 
-if selected_hood == "All":
+if selected_hood == "All Neighbourhoods":
     filtered_df = df
 else:
     filtered_df = df[df['neighbourhood_cleansed'] == selected_hood]
@@ -39,10 +39,11 @@ st.title("Cambridge 🚣 Airbnb Listings Dashboard")
 
 st.image("Cambridge.jpg", use_container_width=True)
 
-st.subheader("Map of Listings")
+st.subheader(f"Map of Listings in {selected_hood}")
 
 # Graph One
 # Prepare data for map (remove rows with missing coordinates)
+
 map_df = filtered_df.dropna(subset=['latitude', 'longitude'])
 
 if not map_df.empty:
