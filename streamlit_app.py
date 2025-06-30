@@ -10,6 +10,7 @@ df = pd.read_csv("listings.csv")
 # Clean data
 df["price"] = df["price"].replace({r"[\$,]": ""}, regex=True).astype(float)
 
+#Add Bins to Ratings
 bins = [0, 1, 2, 3, 4, 5]
 labels = ['(0-1]', '(1-2]', '(2-3]', '(3-4]', '(4-5]']
 df['rating_bin'] = pd.cut(df['review_scores_rating'], bins=bins, labels=labels, include_lowest=True, right=True)
@@ -24,7 +25,7 @@ st.set_page_config(page_title="Cambridge Airbnb Dashboard", layout="wide")
 # Filters on Sidebar
 st.sidebar.header("Filters")  # Move filters to the sidebar
 
-# Show dropdown with all unique neighbourhoods
+# Show Dropdown With All Unique Neighbourhoods
 unique_hoods = sorted([hood for hood in df['neighbourhood_cleansed'].unique() if hood and hood != 'nan'])
 unique_hoods.insert(0, "All Neighbourhoods")  # Add "All" at the top
 selected_hood = st.sidebar.selectbox('Select Neighbourhood', unique_hoods)
