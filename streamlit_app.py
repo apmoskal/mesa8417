@@ -35,12 +35,13 @@ else:
     filtered_df = df[df['neighbourhood_cleansed'] == selected_hood]
 
 # Dashboard Title
-st.title("Cambridge Airbnb Listings Dashboard")
+st.title("Cambridge 🚣 Airbnb Listings Dashboard")
 
 st.image("Cambridge.jpg", use_column_width=True)
 
 st.subheader("Map of Listings")
 
+# Graph One
 # Prepare data for map (remove rows with missing coordinates)
 map_df = filtered_df.dropna(subset=['latitude', 'longitude'])
 
@@ -57,9 +58,8 @@ hist_chart = alt.Chart(filtered_df).mark_bar(color='#FF7F0E').encode(
 ).properties(width=600)
 st.altair_chart(hist_chart, use_container_width=True)
 
-st.subheader("Boxplot of Price by Review Scores Rating")
 
-# Draw boxplot for just the selected neighbourhood
+# Graph Three
 st.subheader("Boxplot of Price by Review Scores Rating (Selected Neighbourhood)")
 box_chart = alt.Chart(filtered_df.dropna(subset=['rating_bin', 'price'])).mark_boxplot(extent='min-max').encode(
     x=alt.X('rating_bin:N', title='Review Scores Rating Bin'),
