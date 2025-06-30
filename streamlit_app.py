@@ -10,8 +10,8 @@ df = pd.read_csv("listings.csv")
 df["price"] = df["price"].replace({r"[\$,]": ""}, regex=True).astype(float)
 
 #Fill NaN with a default value
-df['neighbourhood_group_cleansed'] = df['neighbourhood_group_cleansed'].fillna('Not Listed')
-df['neighbourhood_group_cleansed'] = df['neighbourhood_group_cleansed'].astype(str).str.strip()
+df['neighbourhood_cleansed'] = df['neighbourhood_cleansed'].fillna('Not Listed')
+df['neighbourhood_cleansed'] = df['neighbourhood_cleansed'].astype(str).str.strip()
 
 # Config Page
 st.set_page_config(page_title="Cambridge Airbnb Dashboard", layout="wide")
@@ -20,10 +20,10 @@ st.set_page_config(page_title="Cambridge Airbnb Dashboard", layout="wide")
 st.sidebar.header("Filters")  # Move filters to the sidebar
 
 # Show dropdown with all unique neighbourhoods
-unique_hoods = sorted([hood for hood in df['neighbourhood_group_cleansed'].unique() if hood and hood != 'nan'])
+unique_hoods = sorted([hood for hood in df['neighbourhood_cleansed'].unique() if hood and hood != 'nan'])
 selected_hood = st.sidebar.selectbox('Select Neighbourhood', unique_hoods)
 
-filtered_df = df[df['neighbourhood_group_cleansed'] == selected_hood]
+filtered_df = df[df['neighbourhood_cleansed'] == selected_hood]
 
 # Dashboard Title
 st.title("Cambridge Airbnb Listings Dashboard")
