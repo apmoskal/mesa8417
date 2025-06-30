@@ -17,11 +17,11 @@ st.set_page_config(page_title="Cambridge Airbnb Dashboard", layout="wide")
 st.header("Filters")
 
 neighborhoods = ["All"] + sorted(df["neighbourhood_group_cleansed"].dropna().unique().tolist())
-selected_neigh = st.header.selectbox("Neighbourhood", neighborhoods)
+selected_neigh = st.selectbox("Neighbourhood", neighborhoods)
 
 price_min = int(df["price"].min())
 price_max = int(df["price"].max())
-selected_price = st.sidebar.slider("Price Range", min_value=price_min, max_value=price_max, value=(50, 500))
+selected_price = st.slider("Price Range", min_value=price_min, max_value=price_max, value=(50, 500))
 
 # Filter Data
 filtered = df.copy()
