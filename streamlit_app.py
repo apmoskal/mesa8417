@@ -62,6 +62,4 @@ bar_chart = alt.Chart(filtered).mark_bar().encode(
     y=alt.Y('count()', title='Available Property Count'),
     color=alt.condition('filtered', 'neighbourhood_cleansed', alt.value('lightgray'), legend=None),
     tooltip=['neighbourhood_cleansed', 'count()']
-).add_params(      
-    filtered
 )
