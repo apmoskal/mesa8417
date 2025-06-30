@@ -37,7 +37,7 @@ else:
 # Dashboard Title
 st.title("Cambridge 🚣 Airbnb Listings Dashboard")
 
-st.image("Cambridge.jpg", use_column_width=True)
+st.image("Cambridge.jpg", use_container_width=True)
 
 st.subheader("Map of Listings")
 
