@@ -35,7 +35,7 @@ else:
     filtered_df = df[df['neighbourhood_cleansed'] == selected_hood]
 
 # Dashboard Title
-st.title("Cambridge 🚣 Airbnb Listings Dashboard")
+st.title(f"Cambridge 🚣 Airbnb Listings Dashboard for {selected_hood}")
 
 st.image("Cambridge.jpg", use_container_width=True)
 
