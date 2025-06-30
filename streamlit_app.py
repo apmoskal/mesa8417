@@ -60,7 +60,7 @@ st.dataframe(filtered)
 bar_chart = alt.Chart(filtered).mark_bar().encode(
     x=alt.X('neighbourhood_cleansed').sort('-y'),
     y=alt.Y('count()', title='Available Property Count'),
-    color=alt.condition(select_neighborhood, 'neighbourhood_cleansed', alt.value('lightgray'), legend=None),
+    color=alt.condition(filtered, 'neighbourhood_cleansed', alt.value('lightgray'), legend=None),
     tooltip=['neighbourhood_cleansed', 'count()']
 ).add_params(      
     select_neighborhood
