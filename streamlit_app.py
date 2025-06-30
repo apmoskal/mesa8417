@@ -32,19 +32,9 @@ filtered = filtered[filtered["price"].between(*selected_price)]
 # Dashboard Title
 st.title("Cambridge Airbnb Listings Dashboard")
 
-# Overview Text
-st.markdown(
-    f"Showing listings for **{selected_room if selected_room != 'All' else 'all room types'}** "
-    f"in **{selected_neigh if selected_neigh != 'All' else 'all neighborhoods'}**, "
-    f"priced between **${selected_price[0]}–${selected_price[1]}**."
-)
-
 st.image("Cambridge.jpg", width=400)
 
-# Visualization Tabs
-#tab1, tab2, tab3 = st.tabs(["📊 Charts", "🗺️ Map", "📋 Data"])
-
-#with tab1:
+#Graph One
 st.subheader("Average Price by Room Type")
 avg_price = filtered.groupby("room_type")["price"].mean().reset_index()
 bar_chart = alt.Chart(avg_price).mark_bar().encode(
@@ -54,6 +44,7 @@ bar_chart = alt.Chart(avg_price).mark_bar().encode(
 ).properties(width=600)
 st.altair_chart(bar_chart, use_container_width=True)
 
+#Graph Two
 st.subheader("Price Distribution")
 hist_chart = alt.Chart(filtered).mark_bar(color='#FF7F0E').encode(
     x=alt.X("price:Q", bin=alt.Bin(maxbins=40), title="Price ($)"),
@@ -61,11 +52,11 @@ hist_chart = alt.Chart(filtered).mark_bar(color='#FF7F0E').encode(
 ).properties(width=600)
 st.altair_chart(hist_chart, use_container_width=True)
 
-#with tab3:
+#Graph Three
 st.subheader("Filtered Listings")
 st.dataframe(filtered)
 
-# First chart: Bar chart of available properties by neighbourhood
+##Graph Four
 bar_chart = alt.Chart(filtered).mark_bar().encode(
     x=alt.X('neighbourhood_cleansed').sort('-y'),
     y=alt.Y('count()', title='Available Property Count'),
