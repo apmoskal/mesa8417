@@ -2,6 +2,7 @@ import streamlit as st
 import altair as alt
 import pandas as pd
 import numpy as np
+import pydeck as pdk
 
 # Load the compressed dataset
 df = pd.read_csv("listings.csv")
@@ -29,6 +30,34 @@ filtered_df = df[df['neighbourhood_cleansed'] == selected_hood]
 st.title("Cambridge Airbnb Listings Dashboard")
 
 st.image("Cambridge.jpg", width=400)
+
+st.subheader("Map of Listings")
+
+map_df = filtered_df.dropna(subset=['latitude', 'longitude'])
+
+if not map_df.empty:
+    st.pydeck_chart(pdk.Deck(
+        map_style='mapbox://styles/mapbox/streets-v11',
+        initial_view_state=pdk.ViewState(
+            latitude=map_df["latitude"].mean(),
+            longitude=map_df["longitude"].mean(),
+            zoom=12,
+            pitch=0,
+        ),
+        layers=[
+            pdk.Layer(
+                "ScatterplotLayer",
+                data=map_df,
+                get_position='[longitude, latitude]',
+                get_color='[255, 140, 0, 140]',
+                get_radius=40,
+                pickable=True,
+            ),
+        ],
+        tooltip={"text": "Price: ${price}\nName: {name}"}
+    ))
+else:
+    st.info("No listings available for this neighbourhood.")
 
 # Graph Two
 st.subheader("Price Distribution")
