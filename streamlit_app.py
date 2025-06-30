@@ -25,10 +25,6 @@ selected_price = st.sidebar.slider("Price Range", min_value=price_min, max_value
 
 # Filter Data
 filtered = df.copy()
-if selected_room != "All":
-    filtered = filtered[filtered["room_type"] == selected_room]
-if selected_neigh != "All":
-    filtered = filtered[filtered["neighbourhood_group_cleansed"] == selected_neigh]
 if selected_neigh != "All":
     filtered = filtered[filtered["neighbourhood_group_cleansed"] == selected_neigh]
 filtered = filtered[filtered["price"].between(*selected_price)]
