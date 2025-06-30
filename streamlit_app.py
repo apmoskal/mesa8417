@@ -1,4 +1,3 @@
-# app.py
 import streamlit as st
 import altair as alt
 import pandas as pd
@@ -25,9 +24,9 @@ st.title("Cambridge Airbnb Listings Dashboard")
 
 st.image("Cambridge.jpg", width=400)
 
-#Graph Two
+# Graph Two
 st.subheader("Price Distribution")
-hist_chart = alt.Chart(filtered).mark_bar(color='#FF7F0E').encode(
+hist_chart = alt.Chart(filtered_df).mark_bar(color='#FF7F0E').encode(
     x=alt.X("price:Q", bin=alt.Bin(maxbins=40), title="Price ($)"),
     y=alt.Y("count()", title="Number of Listings")
 ).properties(width=600)
