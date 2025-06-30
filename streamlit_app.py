@@ -13,9 +13,13 @@ df["price"] = df["price"].replace({r"[\$,]": ""}, regex=True).astype(float)
 st.set_page_config(page_title="Cambridge Airbnb Dashboard", layout="wide")
 
 # Filters on Sidebar
-st.header("Filters")
+st.sidebar.header("Filters")  # Move filters to the sidebar
 
-selected_hood = st.selectbox('Select Neighbourhood', df['neighbourhood_group_cleansed'].unique())
+# Show dropdown with all unique neighbourhoods
+selected_hood = st.sidebar.selectbox(
+    'Select Neighbourhood',
+    sorted(df['neighbourhood_group_cleansed'].unique())
+)
 
 filtered_df = df[df['neighbourhood_group_cleansed'] == selected_hood]
 
