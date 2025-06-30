@@ -14,10 +14,10 @@ df["price"] = df["price"].replace({r"[\$,]": ""}, regex=True).astype(float)
 st.set_page_config(page_title="Cambridge Airbnb Dashboard", layout="wide")
 
 # Filters on Sidebar
-st.sidebar.header("Filters")
+st.header("Filters")
 
 neighborhoods = ["All"] + sorted(df["neighbourhood_group_cleansed"].dropna().unique().tolist())
-selected_neigh = st.sidebar.selectbox("Neighbourhood", neighborhoods)
+selected_neigh = st.header.selectbox("Neighbourhood", neighborhoods)
 
 price_min = int(df["price"].min())
 price_max = int(df["price"].max())
